@@ -26,25 +26,21 @@ app.get('/api/movie/expoferia', (req, res) => {
 });
 
 app.get('/images/betty.png', (req, res) => {
-
     const fs = require("fs");
     const path = require("path");
     const url = require("url");
-    
-    
     const request = url.parse(req.url, true);
-
     const action = request.pathname;
     const filePath = "public/images/betty.png";
+
     fs.exists(filePath, function (exists) {
       if (!exists) {
           res.writeHead(404, {"Content-Type": "text/plain"});
           res.end("404 Not Found");
           return;
       }
-
       const ext = path.extname(action);
-      let contentType = "text/plain";
+          let contentType = "text/plain";
       if (ext === ".png") {
           contentType = "image/png";
       }
