@@ -32,48 +32,26 @@ app.get('/images/betty.png', (req, res) => {
     const url = require("url");
     
     
-    // Parsing the URL
     const request = url.parse(req.url, true);
 
-    // Extracting the path of file
     const action = request.pathname;
-    // Path Refinements
     const filePath = "public/images/betty.png";
-    // Checking if the path exists
     fs.exists(filePath, function (exists) {
- 
       if (!exists) {
-          res.writeHead(404, {
-              "Content-Type": "text/plain"
-          });
+          res.writeHead(404, {"Content-Type": "text/plain"});
           res.end("404 Not Found");
           return;
       }
 
-      // Extracting file extension
       const ext = path.extname(action);
-
-      // Setting default Content-Type
       let contentType = "text/plain";
-
-      // Checking if the extension of
-      // image is '.png'
       if (ext === ".png") {
           contentType = "image/png";
       }
+      res.writeHead(200, {"Content-Type": contentType});
 
-      // Setting the headers
-      res.writeHead(200, {
-          "Content-Type": contentType
-      });
-
-      // Reading the file
-      fs.readFile(filePath,
-          function (err, content) {
-              // Serving the image
-              res.end(content);
-          });
-  });
+      fs.readFile(filePath,function (err, content) {res.end(content);});
+    });
 });
 
 
